@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>EduShareBF</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    .app {
+      max-width: 500px;
+      min-height: 100vh;
+      margin: auto;
+      background: white;
+    }
+
+    header {
+      background: #1264e8;
+      color: white;
+      padding: 28px 20px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .welcome {
+      margin-bottom: 20px;
+    }
+
+    .welcome h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: #667085;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 22px 15px;
+      text-align: center;
+    }
+
+    .icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: #667085;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(500px, 100%);
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+      padding: 12px 5px;
+    }
+
+    .nav-item {
+      text-align: center;
+      font-size: 12px;
+      color: #667085;
+    }
+
+    .nav-icon {
+      font-size: 21px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .active {
+      color: #1264e8;
+      font-weight: bold;
+    }
+
+    .space {
+      height: 80px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <header>
+      <h1>EduShareBF 🇧🇫</h1>
+      <p>Apprendre • Partager • Réussir</p>
+    </header>
+
+    <main>
+
+      <section class="welcome">
+        <h2>Bienvenue sur EduShareBF 👋</h2>
+        <p>La plateforme pour apprendre et partager des ressources scolaires.</p>
+      </section>
+
+      <section class="cards">
+
+        <div class="card">
+          <div class="icon">👥</div>
+          <h3>Groupes</h3>
+          <p>Rejoins ou crée un groupe de travail.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">📚</div>
+          <h3>Documents</h3>
+          <p>Retrouve tes sujets et évaluations.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">📝</div>
+          <h3>Sujets</h3>
+          <p>Partage des sujets d'examen.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon">🎯</div>
+          <h3>Réussite</h3>
+          <p>Travaille ensemble pour progresser.</p>
+        </div>
+
+      </section>
+
+    </main>
+
+    <div class="space"></div>
+
+    <nav class="bottom-nav">
+      <div class="nav-item active">
+        <span class="nav-icon">🏠</span>
+        Accueil
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">👥</span>
+        Groupes
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">📚</span>
+        Documents
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">👤</span>
+        Profil
+      </div>
+    </nav>
+
+  </div>
+
+</body>
+        </html>
