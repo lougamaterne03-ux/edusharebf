@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>EduShareBF 🇧🇫</title>
 
   <style>
@@ -19,14 +18,15 @@
     }
 
     .container {
+      width: 100%;
       max-width: 430px;
       margin: auto;
-      padding: 25px 18px;
+      padding: 20px;
     }
 
     .logo {
       text-align: center;
-      margin: 30px 0 25px;
+      margin: 30px 0;
     }
 
     .logo h1 {
@@ -42,19 +42,19 @@
       background: white;
       padding: 22px;
       border-radius: 18px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 18px rgba(0,0,0,.08);
     }
 
     .tabs {
       display: flex;
       border-bottom: 1px solid #ddd;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .tab {
       flex: 1;
-      padding: 13px;
-      border: none;
+      padding: 14px;
+      border: 0;
       background: white;
       font-size: 16px;
       font-weight: bold;
@@ -66,16 +66,23 @@
       border-bottom: 3px solid #1769e0;
     }
 
+    .form {
+      display: none;
+    }
+
+    .form.active {
+      display: block;
+    }
+
     label {
       display: block;
-      margin-bottom: 7px;
+      margin: 12px 0 7px;
       font-weight: bold;
     }
 
     input {
       width: 100%;
-      padding: 13px;
-      margin-bottom: 16px;
+      padding: 14px;
       border: 1px solid #d0d5dd;
       border-radius: 10px;
       font-size: 16px;
@@ -83,8 +90,9 @@
 
     .btn {
       width: 100%;
+      margin-top: 18px;
       padding: 14px;
-      border: none;
+      border: 0;
       border-radius: 10px;
       background: #1769e0;
       color: white;
@@ -93,35 +101,37 @@
       cursor: pointer;
     }
 
-    .message {
+    .btn:disabled {
+      opacity: .6;
+    }
+
+    #message {
       margin-top: 15px;
       padding: 12px;
       border-radius: 10px;
       display: none;
     }
 
-    .message.show {
+    #message.show {
       display: block;
     }
 
-    .success {
+    #message.success {
       background: #e8f7ee;
       color: #137333;
     }
 
-    .error {
+    #message.error {
       background: #fdecec;
       color: #b42318;
     }
 
-    #signupForm,
     #appScreen {
       display: none;
     }
 
     .logout {
       background: #dc3545;
-      margin-top: 20px;
     }
   </style>
 </head>
@@ -135,16 +145,24 @@
     <p>Apprendre • Partager • Réussir</p>
   </div>
 
+
   <!-- CONNEXION / INSCRIPTION -->
+
   <div id="authScreen" class="card">
 
     <div class="tabs">
 
-      <button id="loginTab" class="tab active" type="button">
+      <button
+        id="loginTab"
+        class="tab active"
+        type="button">
         Connexion
       </button>
 
-      <button id="signupTab" class="tab" type="button">
+      <button
+        id="signupTab"
+        class="tab"
+        type="button">
         Inscription
       </button>
 
@@ -153,18 +171,23 @@
 
     <!-- CONNEXION -->
 
-    <form id="loginForm">
+    <form id="loginForm" class="form active">
 
-      <label>Email</label>
+      <label for="loginEmail">
+        Email
+      </label>
 
       <input
         id="loginEmail"
         type="email"
-        placeholder="Votre adresse email"
+        placeholder="Votre email"
         required
       >
 
-      <label>Mot de passe</label>
+
+      <label for="loginPassword">
+        Mot de passe
+      </label>
 
       <input
         id="loginPassword"
@@ -173,7 +196,11 @@
         required
       >
 
-      <button class="btn" type="submit">
+
+      <button
+        id="loginButton"
+        class="btn"
+        type="submit">
         Se connecter
       </button>
 
@@ -182,9 +209,11 @@
 
     <!-- INSCRIPTION -->
 
-    <form id="signupForm">
+    <form id="signupForm" class="form">
 
-      <label>Nom complet</label>
+      <label for="signupName">
+        Nom complet
+      </label>
 
       <input
         id="signupName"
@@ -193,16 +222,22 @@
         required
       >
 
-      <label>Email</label>
+
+      <label for="signupEmail">
+        Email
+      </label>
 
       <input
         id="signupEmail"
         type="email"
-        placeholder="Votre adresse email"
+        placeholder="Votre email"
         required
       >
 
-      <label>Mot de passe</label>
+
+      <label for="signupPassword">
+        Mot de passe
+      </label>
 
       <input
         id="signupPassword"
@@ -212,19 +247,23 @@
         required
       >
 
-      <button class="btn" type="submit">
+
+      <button
+        id="signupButton"
+        class="btn"
+        type="submit">
         Créer mon compte
       </button>
 
     </form>
 
 
-    <div id="message" class="message"></div>
+    <div id="message"></div>
 
   </div>
 
 
-  <!-- ÉCRAN APRÈS CONNEXION -->
+  <!-- APPLICATION APRÈS CONNEXION -->
 
   <div id="appScreen" class="card">
 
@@ -232,7 +271,10 @@
 
     <p id="welcomeText"></p>
 
-    <button id="logoutButton" class="btn logout">
+    <button
+      id="logoutButton"
+      class="btn logout"
+      type="button">
       Se déconnecter
     </button>
 
@@ -247,245 +289,141 @@
 
 <script>
 
-const SUPABASE_URL =
-"https://0ec90b57d6e95fcbda19832f.supabase.co";
+(function () {
 
-const SUPABASE_ANON_KEY =
-"sb_publishable_-1PQweXtzFo2awLV-0NBrQ_9CXGwvPc";
+  "use strict";
 
 
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
+  /* ==========================
+     SUPABASE
+     ========================== */
+
+  const SUPABASE_URL =
+    "https://0ec90b57d6e95fcbda19832f.supabase.co";
+
+  const SUPABASE_ANON_KEY =
+    "COLLE_TA_NOUVELLE_PUBLISHABLE_KEY_ICI";
 
 
-/* ÉLÉMENTS */
-
-const loginTab =
-document.getElementById("loginTab");
-
-const signupTab =
-document.getElementById("signupTab");
-
-const loginForm =
-document.getElementById("loginForm");
-
-const signupForm =
-document.getElementById("signupForm");
-
-const authScreen =
-document.getElementById("authScreen");
-
-const appScreen =
-document.getElementById("appScreen");
-
-const message =
-document.getElementById("message");
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
 
 
-/* MESSAGE */
+  /* ==========================
+     ÉLÉMENTS
+     ========================== */
 
-function showMessage(text, type) {
+  const loginTab =
+    document.getElementById("loginTab");
 
-  message.textContent = text;
+  const signupTab =
+    document.getElementById("signupTab");
 
-  message.className =
-  "message show " + type;
+  const loginForm =
+    document.getElementById("loginForm");
 
-}
+  const signupForm =
+    document.getElementById("signupForm");
 
+  const authScreen =
+    document.getElementById("authScreen");
 
-/* CONNEXION */
+  const appScreen =
+    document.getElementById("appScreen");
 
-loginTab.addEventListener("click", function() {
-
-  loginForm.style.display = "block";
-
-  signupForm.style.display = "none";
-
-  loginTab.classList.add("active");
-
-  signupTab.classList.remove("active");
-
-  message.className = "message";
-
-});
+  const message =
+    document.getElementById("message");
 
 
-/* INSCRIPTION */
+  /* ==========================
+     MESSAGES
+     ========================== */
 
-signupTab.addEventListener("click", function() {
+  function showMessage(text, type) {
 
-  loginForm.style.display = "none";
+    message.textContent = text;
 
-  signupForm.style.display = "block";
+    message.className =
+      "show " + type;
 
-  signupTab.classList.remove("active");
-
-  signupTab.classList.add("active");
-
-  loginTab.classList.remove("active");
-
-  message.className = "message";
-
-});
+  }
 
 
-/* CRÉER UN COMPTE */
+  function clearMessage() {
 
-signupForm.addEventListener("submit", async function(event) {
+    message.textContent = "";
 
-  event.preventDefault();
+    message.className = "";
 
-  const name =
-  document.getElementById("signupName").value.trim();
-
-  const email =
-  document.getElementById("signupEmail").value.trim();
-
-  const password =
-  document.getElementById("signupPassword").value;
+  }
 
 
-  const { data, error } =
-  await supabaseClient.auth.signUp({
+  /* ==========================
+     CONNEXION
+     ========================== */
 
-    email: email,
+  loginTab.addEventListener(
+    "click",
+    function () {
 
-    password: password,
+      loginTab.classList.add("active");
 
-    options: {
+      signupTab.classList.remove("active");
 
-      data: {
-        full_name: name
-      }
+      loginForm.classList.add("active");
+
+      signupForm.classList.remove("active");
+
+      clearMessage();
 
     }
-
-  });
-
-
-  if (error) {
-
-    showMessage(
-      error.message,
-      "error"
-    );
-
-    return;
-  }
+  );
 
 
-  if (!data.session) {
+  /* ==========================
+     INSCRIPTION
+     ========================== */
 
-    showMessage(
-      "Compte créé ! Vérifie ton email pour confirmer ton compte.",
-      "success"
-    );
+  signupTab.addEventListener(
+    "click",
+    function () {
 
-  } else {
+      signupTab.classList.add("active");
 
-    showApp(data.user);
+      loginTab.classList.remove("active");
 
-  }
+      signupForm.classList.add("active");
 
-});
+      loginForm.classList.remove("active");
 
+      clearMessage();
 
-/* SE CONNECTER */
-
-loginForm.addEventListener("submit", async function(event) {
-
-  event.preventDefault();
-
-  const email =
-  document.getElementById("loginEmail").value.trim();
-
-  const password =
-  document.getElementById("loginPassword").value;
+    }
+  );
 
 
-  const { data, error } =
-  await supabaseClient.auth.signInWithPassword({
+  /* ==========================
+     INSCRIPTION SUPABASE
+     ========================== */
 
-    email: email,
+  signupForm.addEventListener(
+    "submit",
+    async function (event) {
 
-    password: password
-
-  });
-
-
-  if (error) {
-
-    showMessage(
-      error.message,
-      "error"
-    );
-
-    return;
-  }
+      event.preventDefault();
 
 
-  showApp(data.user);
+      const name =
+        document
+          .getElementById("signupName")
+          .value
+          .trim();
 
-});
-
-
-/* AFFICHER L'APPLICATION */
-
-function showApp(user) {
-
-  authScreen.style.display = "none";
-
-  appScreen.style.display = "block";
-
-
-  const name =
-  user.user_metadata?.full_name ||
-  user.email?.split("@")[0] ||
-  "Utilisateur";
-
-
-  document.getElementById("welcomeText").textContent =
-  "Bonjour " + name + " ! Ton compte EduShareBF est connecté.";
-}
-
-
-/* DÉCONNEXION */
-
-document
-.getElementById("logoutButton")
-.addEventListener("click", async function() {
-
-  await supabaseClient.auth.signOut();
-
-  appScreen.style.display = "none";
-
-  authScreen.style.display = "block";
-
-});
-
-
-/* VÉRIFIER LA SESSION */
-
-async function checkSession() {
-
-  const { data } =
-  await supabaseClient.auth.getSession();
-
-  if (data.session) {
-
-    showApp(data.session.user);
-
-  }
-
-}
-
-checkSession();
-
-</script>
-
-</body>
-</html>
+      const email =
+        document
+          .getElementById("signupEmail")
+          .value
+          .
